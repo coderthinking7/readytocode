@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+  </head>
+  <body>
+    <style>
+      #calendar {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#calendar th {
+  background-color: #f1f1f1;
+  padding: 10px;
+}
+
+#calendar td {
+  padding: 10px;
+  text-align: center;
+}
+
+#year {
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.present {
+  background-color: #c7f0c0; /* Green */
+}
+
+.absent {
+  background-color: #f3a8a8; /* Red */
+}
+  
+    </style>
+    <div id="year"></div>
+    <table id="calendar">
+      <thead>
+        <tr>
+          <th>Sun</th>
+          <th>Mon</th>
+          <th>Tue</th>
+          <th>Wed</th>
+          <th>Thu</th>
+          <th>Fri</th>
+          <th>Sat</th>
+        </tr>
+      </thead>
+      <tbody id="calendar-body"></tbody>
+    </table>
+    <script>
+
+document.addEventListener("DOMContentLoaded", function() {
+  var date = new Date();
+  var year = date.getFullYear();
+  var month = date.getMonth();
+
+  generateCalendar(month, year);
+});
+
+function generateCalendar(month, year) {
+  var date = new Date(year, month, 1);
+  var calendarBody = document.getElementById("calendar-body");
+  var yearDisplay = document.getElementById("year");
+
+  calendarBody.innerHTML = "";
+  yearDisplay.innerText = year;
+
+  while (date.getMonth() === month) {
+    var row = document.createElement("tr");
+
+    for (var i = 0; i < 7; i++) {
+      var cell = document.createElement("td");
+      cell.innerText = date.getDate();
+
+      // Set the attendance class based on your logic
+      // You may need to retrieve attendance data from a database or API
+      cell.addEventListener("click", toggleAttendance);
+
+      row.appendChild(cell);
+      date.setDate(date.getDate() + 1);
+    }
+
+    calendarBody.appendChild(row);
+  }
+}
+
+function toggleAttendance(event) {
+  var cell = event.target;
+  cell.classList.toggle("present");
+  cell.classList.toggle("absent");
+}
+
+    </script>
+  </body>
+</html>
